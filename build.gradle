@@ -5,14 +5,13 @@ plugins {
 group 'ru.netology'
 version '1.0-SNAPSHOT'
 
-// используем 11 версию языка
 java {
-    sourceCompatibility = 11
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
-// кодировка файлов (если используете русский язык в файлах)
-compileJava.options.encoding = "UTF-8"
-compileTestJava.options.encoding = "UTF-8"
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -20,12 +19,21 @@ repositories {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.29.0'
+
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.3'
 }
 
 test {
     useJUnitPlatform()
-    // свойство chromeoptions.prefs используется для задания настроек браузера в проектах на основе Selenide, выключаем менеджер паролей
-    systemProperty 'chromeoptions.prefs', System.getProperty('chromeoptions.prefs', "profile.password_manager_leak_detection=false")
+
+    systemProperty 'chromeoptions.prefs',
+            System.getProperty('chromeoptions.prefs', 'profile.password_manager_leak_detection=false')
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat 'full'
+        showStandardStreams = true
+    }
 }
