@@ -31,7 +31,7 @@ class OrderCardTest extends BaseTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         WebElement successText = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//*[contains(text(),'Ваша заявка успешно отправлена!')]")
+                        By.cssSelector("[data-test-id='order-success']")
                 )
         );
 
